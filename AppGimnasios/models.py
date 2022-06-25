@@ -7,23 +7,26 @@ class Sucursales(models.Model):
     fechaDeInauguracionSucursal=models.DateField()
 
     def __str__(self):
-        return self.nombreSucursal+" "+str(self.idSucursal)
+        return str(self.idSucursal)+" "+str(self.nombreSucursal)
 
 class Clases(models.Model):
     idClase=models.IntegerField(primary_key=True)
     nombreClase=models.CharField(max_length=40)
+    sucursalClase = models.CharField(max_length=40)
+    profesorClase = models.CharField(max_length=40)
 
     def __str__(self):
-        return self.nombreClase+" "+str(self.idClase)
+        return str(self.nombreClase)
 
 class Profesores(models.Model):
+    id=models.IntegerField(primary_key=True)
     nombreProfesor=models.CharField(max_length=40)
     apellidoProfesor=models.CharField(max_length=40)
     nombreClaseProfesor=models.CharField(max_length=60)
     fechaDeNacimientoProfesor=models.DateField()
 
     def __str__(self):
-        return self.nombreProfesor+""+str(self.nombreProfesor)
+        return str(self.id)+" "+self.nombreProfesor+" "+str(self.apellidoProfesor)
 
 class Horarios(models.Model):
     idHorario=models.IntegerField(primary_key=True)
@@ -31,4 +34,4 @@ class Horarios(models.Model):
     horarioClase=models.TimeField()
 
     def __str__(self):
-        return self.nombreClaseH+" "+str(self.idHorario)
+        return str(self.idHorario)+" "+str(self.nombreClaseH)+" "+str(self.horarioClase)

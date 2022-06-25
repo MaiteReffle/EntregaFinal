@@ -1,0 +1,13 @@
+{% extends "AppGimnasios/padre.html" %}
+{% load static %}
+{% block contenidoQueCambia %}
+<h3>Modificar de profesor</h3>
+<form action="{% url 'editarProfesor' id %}" method="POST">{% csrf_token %}
+
+    <table>
+        {{formulario.as_table}}
+    </table>     
+    <input type="submit" value="Enviar Modificación Profesor"> 
+</form> 
+
+{% endblock %}

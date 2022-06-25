@@ -2,23 +2,28 @@ from math import remainder
 from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import render
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 from AppGimnasios.models import *
 from AppGimnasios.forms import *
 
 def sucursales(request):
-    return render(request,'appGimnasios/sucursales.html')
+    sucursales = Sucursales.objects.all()
+    contexto = {"sucursales":sucursales}
 
-def clases(request):
-    return render(request,'appGimnasios/clases.html')
+    return render (request,'AppGimnasios/sucursales.html',contexto)
+    
 
-def profesores(request):
-    return render(request,'appGimnasios/profesores.html')
+
 
 def horarios(request):
-    return render(request,'appGimnasios/horarios.html')
+    horarios = Horarios.objects.all()
+    contexto = {"horarios":horarios}
+
+    return render (request,'AppGimnasios/horarios.html',contexto)
 
 def inicio(request):
-    return render(request,'appGimnasios/inicio.html')
+    return render(request,'AppGimnasios/inicio.html')
 
 def sucursalesFormulario(request):
     if request.method == 'POST':
@@ -80,7 +85,7 @@ def horariosFormulario(request):
 
     else:
         formularioHorario = HorariosFormulario()
-    return render(request,'AppGimnasios/horariosFormulario.html', {'formularioHorario':formularioHorario}) 
+    return render(request,'A/horariosFormulario.html', {'formularioHorario':formularioHorario}) 
 
 
 def busquedaSucursal(request):
@@ -95,3 +100,61 @@ def buscarSucursal(request):
         respuesta = "No se ha ingresado sucursal válida"
     return render(request,'AppGimnasios/resultadosBusquedaSucursal.html', {"respuesta":respuesta})
 
+def profesores(request):
+    profesores = Profesores.objects.all()
+    contexto = {"profesores":profesores}
+
+    return render (request,'AppGimnasios/profesores.html',contexto)
+
+def eliminarProfesor(request,id):
+    profesor = Profesores.objects.get(id = id)
+    profesor.delete()
+
+    profesores = Profesores.objects.all()
+    contexto = {'profesores':profesores}
+    return render(request, 'AppGimnasios/profesores.html',contexto)
+
+def editarProfesor(request,id):
+    profesor = Profesores.objects.get(id = id)
+    if request.method == 'POST':
+        formulario = ProfesoresFormulario(request.POST)
+        if formulario.is_valid():
+            informacion = formulario.cleaned_data
+            profesor.nombreProfesor = informacion['nombreProfesor']
+            profesor.apellidoProfesor = informacion['apellidoProfesor']
+            profesor.nombreClaseProfesor = informacion['nombreClaseProfesor']
+            profesor.fechaDeNacimientoProfesor = informacion['fechaDeNacimientoProfesor']
+            profesor.save()
+            
+            profesores = Profesores.objects.all()
+            contexto = {'profesores': profesores}
+            return render (request,'AppGimnasios/profesores.html',contexto)
+
+    else:
+        formulario = ProfesoresFormulario(initial={'id':profesor.id,'nombreProfesor':profesor.nombreProfesor,'apellidoProfesor':profesor.apellidoProfesor,'nombreClaseProfesor':profesor.nombreClaseProfesor,'fechaDeNacimientoProfesor':profesor.fechaDeNacimientoProfesor})
+        contexto = {'formulario':formulario,'id':id}
+        return render (request,'AppGimnasios/editarProfesor.html',contexto)
+
+class ClasesList(ListView):
+    model = Clases
+    template_name = 'AppGimnasios/clases.html'
+
+class ClasesDetail(DetailView):
+    model = Clases
+    template_name = 'AppGimnasios/clasesDetalle.html'
+
+class ClasesCreate(CreateView):
+    model = Clases
+    success_url = reverse_lazy('clases')
+    fields = ['idClase','nombreClase','sucursalClase','profesorClase']
+
+
+class ClasesUpdate(UpdateView):
+    model = Clases
+    success_url = reverse_lazy('clases')
+    fields = ['idClase','nombreClase','sucursalClase','profesorClase']
+
+class ClasesDelete(DeleteView):
+    model = Clases
+    success_url = reverse_lazy('clases')
+  

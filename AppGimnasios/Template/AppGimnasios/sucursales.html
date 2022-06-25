@@ -1,0 +1,11 @@
+{% extends "AppGimnasios/padre.html" %}
+{% load static %}
+{% block contenidoQueCambia %}
+<h3>Lista de sucursales</h3>
+<body>
+    {% for s in sucursales %}
+        <li>{{s}}</li>
+    {% endfor %}
+</body>
+<a class="nav-item"><a class="nav-link" href="{% url 'sucursalesFormulario' %}">Agregar sucursal</a></a>
+{% endblock %}

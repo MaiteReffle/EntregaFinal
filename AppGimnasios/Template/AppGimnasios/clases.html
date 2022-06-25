@@ -1,0 +1,23 @@
+{% extends "AppGimnasios/padre.html" %}
+{% load static %}
+{% block contenidoQueCambia %}
+<h3>Lista de clases</h3>
+<body>
+    {% for c in object_list %}
+        <li>{{c}}</li>
+        <button>
+            <a href="{% url 'Clases_detail' c.pk %}">Detalle</a></a>
+        </button>
+        <button>
+            <a href="{% url 'Clases_delete' c.pk %}">Borrar</a></a>
+        </button>
+        <button>
+            <a href="{% url 'Clases_update' c.pk %}">Modificar</a></a>
+        </button>
+        
+    {% endfor %} 
+    
+
+</body>
+<a class="nav-item"><a class="nav-link" href="{% url 'Clases_create'  %}">Agregar clase</a></a>
+{% endblock %}

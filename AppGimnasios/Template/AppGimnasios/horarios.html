@@ -1,0 +1,10 @@
+{% extends "AppGimnasios/padre.html" %}
+{% load static %}
+{% block contenidoQueCambia %}
+<h3>Lista de horarios</h3>
+<body>
+    {% for h in horarios %}
+        <li>{{h}}</li>
+    {% endfor %}
+</body>
+{% endblock %}

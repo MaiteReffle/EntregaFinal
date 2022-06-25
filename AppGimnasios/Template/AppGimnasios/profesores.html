@@ -1,0 +1,19 @@
+{% extends "AppGimnasios/padre.html" %}
+{% load static %}
+{% block contenidoQueCambia %}
+<h3>Lista de profesores</h3>
+<body>
+    {% for p in profesores %}
+        <li>Nombre: {{p}}</li>
+        <button>
+        <a href="{% url 'eliminarProfesor' p.id %}">Eliminar profesor {{p.id}}</a></a>
+        </button>
+        <button>
+        <a href="{% url 'editarProfesor' p.id %}">Editar profesor {{p.id}}</a></a>
+        </button>
+    {% endfor %}
+</body>
+<a class="nav-item"><a class="nav-link" href="{% url 'profesoresFormulario' %}">Agregar profesor</a></a>
+
+{% endblock %}
+
