@@ -1,0 +1,25 @@
+{% extends "appGimnasios/padre.html" %}
+{% load static %}
+
+{% block sectionName %}
+<a class="text-white-75 mb-15">Resultado busqueda de sucursales</a>
+{% endblock %}
+
+{% block contenidoQueCambia %}
+<h1>Sucursal {{nombreSucursal}}</h1>
+{% if sucursales%}
+<ul>
+    {% for sucursal in sucursales%}
+    <li>Id: {{sucursal.idSucursal}}</li>    
+    <li>Nombre: {{sucursal.nombreSucursal}}</li>
+    <li>Dirección: {{sucursal.direccionSucursal}}</li>
+    <li>Fecha de inauguración: {{sucursal.fechaDeInauguracionSucursal}}</li>
+    {%endfor%}
+</ul>
+{%else%}
+<p style="color:red;">No se ha ingresado sucursal valida</p>
+
+{%endif %}
+
+{% endblock %}
+

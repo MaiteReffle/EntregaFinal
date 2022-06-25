@@ -1,0 +1,18 @@
+{% extends "appGimnasios/padre.html" %}
+{% load static %}
+
+{% block sectionName %}
+<a class="text-white-75 mb-15">Formulario para insertar datos de clases</a>
+{% endblock %}
+
+{% block contenidoQueCambia %}
+
+<form action="{% url 'clasesFormulario' %}" method="POST">{% csrf_token %}
+     <h1>Ingrese los datos del clase a agregar</h1>
+     <table>
+          {{formularioClase.as_table}}
+     </table>     
+     <input type="submit" value="Enviar Formulario Clase"> 
+ </form>
+
+{% endblock %}

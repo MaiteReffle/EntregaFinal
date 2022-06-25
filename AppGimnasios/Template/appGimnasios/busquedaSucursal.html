@@ -1,0 +1,15 @@
+{% extends "appGimnasios/padre.html" %}
+{% load static %}
+
+{% block sectionName %}
+<a class="text-white-75 mb-15">Buscador de sucursales</a>
+{% endblock %}
+
+{% block contenidoQueCambia %}
+<form action="{% url 'buscarSucursal' %}" method="GET">
+     <h1>Ingrese los datos de la sucursal a buscar</h1>
+     <input type="text" name="nombreSucursal" placeholder="nombreSucursal" id="nombreSucursal"> 
+     <input type="submit" value="Buscar"> 
+</form>
+
+{% endblock %}
