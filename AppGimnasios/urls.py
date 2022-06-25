@@ -23,8 +23,8 @@ urlpatterns = [
 
 #URLs de CRUD DJANGO
     path('clases/list/',views.ClasesList.as_view(),name='Clases_list'),
-    path('clases/<pk>/',views.ClasesDetail.as_view(),name='Clases_detail'),
-    path('clase/new',views.ClasesCreate.as_view(),name='Clases_create'),
+    path('clases/<pk>',views.ClasesDetail.as_view(),name='Clases_detail'),
+    path('clases/new/',views.ClasesCreate.as_view(),name='Clases_create'),
     path('clases/update/<pk>',views.ClasesUpdate.as_view(),name='Clases_update'),
     path('clases/delete/<pk>',views.ClasesDelete.as_view(),name='Clases_delete'),
 ]

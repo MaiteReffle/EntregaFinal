@@ -145,16 +145,16 @@ class ClasesDetail(DetailView):
 
 class ClasesCreate(CreateView):
     model = Clases
-    success_url = reverse_lazy('clases')
-    fields = ['idClase','nombreClase','sucursalClase','profesorClase']
+    success_url = reverse_lazy('Clases_list')
+    fields = ['nombreClase','sucursalClase','profesorClase']
 
 
 class ClasesUpdate(UpdateView):
     model = Clases
-    success_url = reverse_lazy('clases')
-    fields = ['idClase','nombreClase','sucursalClase','profesorClase']
+    success_url = reverse_lazy('Clases_list')
+    fields = ['nombreClase','sucursalClase','profesorClase']
 
 class ClasesDelete(DeleteView):
     model = Clases
-    success_url = reverse_lazy('clases')
+    success_url = reverse_lazy('Clases_list')
   
