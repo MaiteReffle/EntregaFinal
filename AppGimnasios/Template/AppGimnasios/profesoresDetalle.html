@@ -1,0 +1,15 @@
+{% extends "AppGimnasios/padre.html" %}
+{% load static %}
+{% block contenidoQueCambia %}
+<h3>Detalle de profesores</h3>
+<p>Id : {{profesores.id}}</p>
+<p>Nombre : {{profesores.nombreProfesor}}</p>
+<p>Apellido : {{profesores.apellidoProfesor}}</p>
+<p>Clase : {{profesores.nombreClaseProfesor}}</p>
+<p>Fecha de Nacimiento : {{profesores.fechaDeNacimientoProfesor}}</p>
+<p>
+    <a href="{% url 'Profesores' %}">Volver</a>
+</p>
+{% endblock %}
+
+

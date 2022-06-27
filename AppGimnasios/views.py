@@ -1,3 +1,4 @@
+from cmath import log
 from math import remainder
 from django.http import HttpResponse
 from django.template import loader
@@ -6,6 +7,10 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.urls import reverse_lazy
 from AppGimnasios.models import *
 from AppGimnasios.forms import *
+from django.contrib.auth.forms import AuthenticationForm #LOGIN
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 def sucursales(request):
     sucursales = Sucursales.objects.all()
@@ -13,9 +18,6 @@ def sucursales(request):
 
     return render (request,'AppGimnasios/sucursales.html',contexto)
     
-
-
-
 def horarios(request):
     horarios = Horarios.objects.all()
     contexto = {"horarios":horarios}
@@ -25,6 +27,7 @@ def horarios(request):
 def inicio(request):
     return render(request,'AppGimnasios/inicio.html')
 
+@login_required
 def sucursalesFormulario(request):
     if request.method == 'POST':
         formularioSucursal = SucursalesFormulario(request.POST)
@@ -41,6 +44,7 @@ def sucursalesFormulario(request):
         formularioSucursal = SucursalesFormulario()
     return render(request,'AppGimnasios/sucursalesFormulario.html', {'formularioSucursal':formularioSucursal})
 
+@login_required
 def profesoresFormulario(request):
     if request.method == 'POST':
         formularioProfesor = ProfesoresFormulario(request.POST)
@@ -58,20 +62,7 @@ def profesoresFormulario(request):
         formularioProfesor = ProfesoresFormulario()
     return render(request,'AppGimnasios/profesoresFormulario.html', {'formularioProfesor':formularioProfesor}) 
 
-def clasesFormulario(request):
-    if request.method == 'POST':
-        formularioClase = ClasesFormulario(request.POST)
-        if formularioClase.is_valid():
-            informacionClase = formularioClase.cleaned_data
-        nombreClase=informacionClase['nombreClase']
-        clases = Clases(nombreClase=nombreClase)
-        clases.save()
-        return render(request,'AppGimnasios/inicio.html')
-
-    else:
-        formularioClase = ClasesFormulario()
-    return render(request,'AppGimnasios/clasesFormulario.html', {'formularioClase':formularioClase}) 
-
+@login_required
 def horariosFormulario(request):
     if request.method == 'POST':
         formularioHorario = HorariosFormulario(request.POST)
@@ -85,7 +76,7 @@ def horariosFormulario(request):
 
     else:
         formularioHorario = HorariosFormulario()
-    return render(request,'A/horariosFormulario.html', {'formularioHorario':formularioHorario}) 
+    return render(request,'AppGimnasios/horariosFormulario.html', {'formularioHorario':formularioHorario}) 
 
 
 def busquedaSucursal(request):
@@ -106,6 +97,7 @@ def profesores(request):
 
     return render (request,'AppGimnasios/profesores.html',contexto)
 
+@login_required
 def eliminarProfesor(request,id):
     profesor = Profesores.objects.get(id = id)
     profesor.delete()
@@ -114,6 +106,7 @@ def eliminarProfesor(request,id):
     contexto = {'profesores':profesores}
     return render(request, 'AppGimnasios/profesores.html',contexto)
 
+@login_required
 def editarProfesor(request,id):
     profesor = Profesores.objects.get(id = id)
     if request.method == 'POST':
@@ -135,6 +128,11 @@ def editarProfesor(request,id):
         contexto = {'formulario':formulario,'id':id}
         return render (request,'AppGimnasios/editarProfesor.html',contexto)
 
+class ProfesoresDetail(LoginRequiredMixin,DetailView):
+    model = Profesores
+    template_name = 'AppGimnasios/profesoresDetalle.html'
+
+
 class ClasesList(ListView):
     model = Clases
     template_name = 'AppGimnasios/clases.html'
@@ -143,18 +141,57 @@ class ClasesDetail(DetailView):
     model = Clases
     template_name = 'AppGimnasios/clasesDetalle.html'
 
-class ClasesCreate(CreateView):
+class ClasesCreate(LoginRequiredMixin,CreateView):
     model = Clases
     success_url = reverse_lazy('Clases_list')
     fields = ['nombreClase','sucursalClase','profesorClase']
 
 
-class ClasesUpdate(UpdateView):
+class ClasesUpdate(LoginRequiredMixin,UpdateView):
     model = Clases
     success_url = reverse_lazy('Clases_list')
     fields = ['nombreClase','sucursalClase','profesorClase']
 
-class ClasesDelete(DeleteView):
+class ClasesDelete(LoginRequiredMixin,DeleteView):
     model = Clases
     success_url = reverse_lazy('Clases_list')
   
+#_____________________________________
+#LOGIN
+#_____________________________________
+def login_request(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request,request.POST)
+        if form.is_valid():
+            usuario = form.cleaned_data.get('username')
+            clave = form.cleaned_data.get('password')
+    #Autenticación del usuario
+            user = authenticate(username= usuario,password=clave)
+            if user is not None:
+                login(request,user)
+                return render(request,'AppGimnasios/inicio.html',{'mensaje': f'Welcome {usuario}!'})
+            else: 
+                return render(request,'AppGimnasios/inicio.html',{'aviso':'Usuario o contraseña incorrectos'})
+        else: 
+            return render(request,'AppGimnasios/inicio.html',{'error':'Error. El formulario es inválido'})
+    else:
+        form = AuthenticationForm()
+        contexto = {'form':form}
+        return render(request,'AppGimnasios/login.html',contexto)
+
+#_____________________________________
+#REGISTER
+#_____________________________________
+def register_request(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            form.save()
+            return render (request,'AppGimnasios/inicio.html',{'mensaje': f'Usuario {username} creado'})
+        else:
+            return render (request,'AppGimnasios/inicio.html',{'mensaje': f'Error. No se pudo crear el usuario'})
+    else:
+        form = UserRegistrationForm()
+        contexto = {'form':form}
+        return render (request,'AppGimnasios/register.html',contexto)

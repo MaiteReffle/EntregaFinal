@@ -1,3 +1,16 @@
 {% extends "AppGimnasios/padre.html" %}
 {% load static %}
+{% block contenidoQueCambia %}
+<h1>{{mensaje}}</h1>
+<h1>{{aviso}}</h1>
+<h1>{{error}}</h1>
+<body>
+<b class="text-black-75 mb-5">Cuenta con usuario?</b> 
+<a class="nav-item"><a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a></a>
+<br></br>
+<b class="text-black-75 mb-5">Todavía no está registrado?</b> <a class="nav-item"><a class="nav-link" href="{% url 'register' %}">Crea un nuevo usuario!</a></a>
+<br></br>
+<b class="text-black-75 mb-5">Tienes la sesión iniciada y deseas salir?</b> <a class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></a>
+</body>
 
+{% endblock %}

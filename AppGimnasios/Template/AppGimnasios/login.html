@@ -1,0 +1,10 @@
+{% extends "AppGimnasios/padre.html" %}
+{% load static %}
+{% block contenidoQueCambia %}
+<h3>LogIn</h3>
+<form method = "POST">{%csrf_token%}
+   {{form.as_p}}
+    <button type = "submit">Iniciar sesión</button>
+</form>
+
+{% endblock %}

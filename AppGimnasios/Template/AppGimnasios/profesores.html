@@ -6,6 +6,9 @@
     {% for p in profesores %}
         <li>Nombre: {{p}}</li>
         <button>
+        <a href="{% url 'Profesores_detail' p.id %}">Detalle</a></a>
+        </button>
+        <button>
         <a href="{% url 'eliminarProfesor' p.id %}">Eliminar profesor {{p.id}}</a></a>
         </button>
         <button>
