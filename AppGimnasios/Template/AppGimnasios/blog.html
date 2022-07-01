@@ -1,0 +1,28 @@
+{% extends "AppGimnasios/padre.html" %}
+{% load static %}
+{% block contenidoQueCambia %}
+<h3>Nuestro blog</h3>
+<body>
+    {% for b in object_list %}
+        <li>{{b.titulo}}</li>
+        <a>{{b.timestamp}}</a>
+        <br></br>
+        <button>
+            <a href="{% url 'blog_detail' b.pk %}">Ver más</a></a>
+        </button>
+        {% if user.is_staff %}
+        <button>
+            <a href="{% url 'blog_delete' b.pk %}">Borrar</a></a>
+        </button>
+        <button>
+            <a href="{% url 'blog_update' b.pk %}">Modificar</a></a>
+        </button>
+        <br></br>
+        {% endif %}
+    {% endfor %}
+</body>
+
+{% if user.is_staff %}
+<a class="nav-item"><a class="nav-link" href="{% url 'blog_create'  %}">Agregar entrada</a></a>
+{% endif %}
+{% endblock %}

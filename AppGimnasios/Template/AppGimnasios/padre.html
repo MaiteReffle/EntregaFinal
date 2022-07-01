@@ -31,6 +31,23 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'Clases_list' %}">Clases</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'Profesores' %}">Profesores</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'Horarios' %}">Horarios</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'blog' %}">Blog</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+                        
+                        {% if user.is_active %}
+                        <li class="nav-item" role="login">
+                        <a class="nav-item"><a class="nav-link" href="{% url 'editarPerfil' %}">Editar Perfil</a>
+                        <br></br>
+                        </b>
+                        {% endif %}
+
+                        {% if user.is_active %}
+                        <li class="nav-item" role="login">
+                        <a class="nav-item"><a class="nav-link" href="{% url 'verPerfil' %}">Ver Perfil</a>
+                        <br></br>
+                        </b>
+                        {% endif %}
+                        
                     </ul>
                 </div>
             </div>

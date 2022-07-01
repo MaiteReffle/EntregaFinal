@@ -5,12 +5,34 @@
 <h1>{{aviso}}</h1>
 <h1>{{error}}</h1>
 <body>
-<b class="text-black-75 mb-5">Cuenta con usuario?</b> 
-<a class="nav-item"><a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a></a>
+
+{% if not user.is_authenticated %}
+<b class="text-black-40 mb-5" role="login">
+<a class="nav-item"><a class="nav-link" href="{% url 'register' %}">Crear usuario</a>
+</b>
+<b class="text-black-40 mb-5" role="login">
+<a class="nav-item"><a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a>
 <br></br>
-<b class="text-black-75 mb-5">Todavía no está registrado?</b> <a class="nav-item"><a class="nav-link" href="{% url 'register' %}">Crea un nuevo usuario!</a></a>
+</b>
+{% endif %}
+
+
+{% if user.is_active %}
+<b class="text-black-40 mb-5" role="login">
+<a class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a>
 <br></br>
-<b class="text-black-75 mb-5">Tienes la sesión iniciada y deseas salir?</b> <a class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></a>
+</b>
+{% endif %}
+
+
+{% if user.is_staff %}
+<div class="alert alert-success" role="alert">
+    You are logged in as {{user.first_name}}, here are the
+    <a href="/admin/">admin pages</a> for changing content.
+</div>
+{% endif %}
+
+
 </body>
 
 {% endblock %}

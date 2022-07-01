@@ -7,5 +7,12 @@
         <li>{{s}}</li>
     {% endfor %}
 </body>
+
+{% if user.is_staff %}
+<b class="text-black-40 mb-5" role="login">
 <a class="nav-item"><a class="nav-link" href="{% url 'sucursalesFormulario' %}">Agregar sucursal</a></a>
+<a class="nav-item"><a class="nav-link" href="{% url 'busquedaSucursal' %}">Buscar sucursal</a></a>
+
+</b>
+{% endif %}
 {% endblock %}

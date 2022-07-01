@@ -1,0 +1,9 @@
+{% extends "AppGimnasios/padre.html" %}
+{% load static %}
+{% block contenidoQueCambia %}
+<h3>Agregar/editar blog</h3>
+<form method = "POST">{%csrf_token%}
+   {{form.as_p}}
+   <input type = "submit" vale = "Enviar">
+</form>
+{% endblock %}

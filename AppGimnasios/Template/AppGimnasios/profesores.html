@@ -8,15 +8,18 @@
         <button>
         <a href="{% url 'Profesores_detail' p.id %}">Detalle</a></a>
         </button>
+        {% if user.is_staff %}
         <button>
-        <a href="{% url 'eliminarProfesor' p.id %}">Eliminar profesor {{p.id}}</a></a>
+        <a href="{% url 'Profesores_delete' p.id %}">Eliminar profesor {{p.id}}</a></a>
         </button>
         <button>
         <a href="{% url 'editarProfesor' p.id %}">Editar profesor {{p.id}}</a></a>
         </button>
+        {% endif %}
     {% endfor %}
 </body>
+{% if user.is_staff %}
 <a class="nav-item"><a class="nav-link" href="{% url 'profesoresFormulario' %}">Agregar profesor</a></a>
-
+{% endif %}
 {% endblock %}
 

@@ -1,4 +1,9 @@
+from distutils.command.upload import upload
+from pyexpat import model
 from django.db import models
+from django.contrib.auth.models import User
+from django.template.defaultfilters import slugify
+from tinymce import models as tinymce_models
 
 class Sucursales(models.Model):
     nombreSucursal=models.CharField(max_length=40)
@@ -35,3 +40,15 @@ class Horarios(models.Model):
 
     def __str__(self):
         return str(self.idHorario)+" "+str(self.nombreClaseH)+" "+str(self.horarioClase)
+
+
+class Blog(models.Model):
+    owner = models.ForeignKey('auth.User',on_delete=models.CASCADE)
+    titulo = models.CharField(max_length=200)
+    subtitulo = models.CharField(max_length=300)
+    cuerpo=tinymce_models.HTMLField()
+    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+    def __unicode__(self,):
+        return self.titulo

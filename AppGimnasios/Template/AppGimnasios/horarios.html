@@ -7,5 +7,7 @@
         <li>{{h}}</li>
     {% endfor %}
 </body>
+{% if user.is_staff %}
 <a class="nav-item"><a class="nav-link" href="{% url 'horariosFormulario' %}">Agregar horario</a></a>
+{% endif %}
 {% endblock %}

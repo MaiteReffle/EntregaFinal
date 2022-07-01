@@ -1,0 +1,12 @@
+{% extends "AppGimnasios/padre.html" %}
+{% load static %}
+{% block contenidoQueCambia %}
+<h2>{{blog.titulo}}</h2>
+<h3>{{blog.subtitulo}}</h3>
+<p>{{blog.cuerpo}}</p>
+<p>{{blog.timestamp}}</p>
+<p>{{blog.owner}}</p>
+<p>
+    <a href="{% url 'blog' %}">Volver</a>
+</p>
+{% endblock %}

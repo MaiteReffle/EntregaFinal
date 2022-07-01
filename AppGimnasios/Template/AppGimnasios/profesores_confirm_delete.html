@@ -1,0 +1,9 @@
+{% extends "AppGimnasios/padre.html" %}
+{% load static %}
+{% block contenidoQueCambia %}
+<h3>Eliminar profesor</h3>
+<form method = "POST">{%csrf_token%}
+    Está seguro de que desea eliminar al profesor"{{object}}"?
+    <input type = "submit" vale = "Sí">
+</form>
+{% endblock %} 

@@ -5,3 +5,5 @@ admin.site.register(Sucursales)
 admin.site.register(Clases)
 admin.site.register(Horarios)
 admin.site.register(Profesores)
+admin.site.register(Blog)
+

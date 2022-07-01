@@ -8,16 +8,17 @@
         <button>
             <a href="{% url 'Clases_detail' c.pk %}">Detalle</a></a>
         </button>
+        {% if user.is_staff %}
         <button>
             <a href="{% url 'Clases_delete' c.pk %}">Borrar</a></a>
         </button>
         <button>
             <a href="{% url 'Clases_update' c.pk %}">Modificar</a></a>
         </button>
-        
+        {% endif %}
     {% endfor %} 
-    
-
 </body>
+{% if user.is_staff %}
 <a class="nav-item"><a class="nav-link" href="{% url 'Clases_create'  %}">Agregar clase</a></a>
+{% endif %}
 {% endblock %}

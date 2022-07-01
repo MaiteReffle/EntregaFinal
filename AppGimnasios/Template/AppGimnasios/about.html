@@ -1,0 +1,19 @@
+{% extends "AppGimnasios/padre.html" %}
+{% load static %}
+{% block contenidoQueCambia %}
+<h1 class="text-black font-weight-bold">About</h1>
+Este es un proyecto realizado para el curso de Python de Coderhouse, Comisión 31075. El proyecto es una página con información de un gimnasio (sucursales, profesores, clases y horarios) y, además, una sección estilo blog. Los usuarios que son parte del staff pueden agregar, editar y eliminar elementos (entradas de blog y los distintas secciones del gimnasio). Los usuarios autenticados que no son parte del staff o quienes no tengan ninguna sesión iniciada, pueden ver detalles de las clases, profesores y entradas del blog (que cuentan con un CRUD completo) pero no pueden editar. Para las sucursales, se encuentra implementado un formulario que permite buscar los datos de alguna sucursal a partir del nombre. Además, la aplicación cuenta con login completo (login, logout, crear cuenta, ver perfil y editar perfil).
+Además, al ingresar en una página que no esté mappeada se redirigirá a una vista que permitirá volver al inicio (se puede ver ejemplo en http://127.0.0.1:8000/appGimnasios/hola)
+<br></br>
+Las integrantes del equipo somos: Magali Donizzoni y Maite Reffle. Conoce más sobre nosotras a continuación:
+<br></br>
+<h3>Maite Reffle</h3>
+<p>Soy Ingeniera Civil, tengo 28 años. Con el curso de Coderhouse, di mis primeros pasos en el mundo de la programación con python. Este interés por aprender a progamar se dio por un cambió de rubro laborar, empecé a trabajar en el equipo de integraciones de una empresa que se dedica al desarrollo de software de recursos humanos, y cada vez fui descubriendo más lo mucho que me gusta el mundo de la programación</p>
+<br></br>
+<h3>Magali Donizzoni</h3>
+<p>Soy estudiante de psicologia y tengo 22 años. Me anoté al curso de Coderhouse principalmente por las buenas referencias que tiene el mundo laboral de sistemas y python en general. Como no tengo salida laboral hasta que termine mi carrera, me interesaba buscar algo que me pueda aportar un sustento económico en el mientras tanto y por eso se me ocurrió involucrarme en la programacion.</p>
+
+
+    <a href="{% url 'Inicio' %}">Volver</a>
+
+{% endblock %}
